@@ -1,9 +1,40 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
 export default function HomePage() {
+  const router = useRouter();
+
+  const [loading, setLoading] = useState(false);
+
+  async function createRoom() {
+    try {
+      setLoading(true);
+
+      const response = await fetch("/api/rooms", {
+        method: "POST",
+      });
+
+      const data = await response.json();
+
+      router.push(data.shareUrl);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
-    <main className="min-h-screen flex items-center justify-center">
-      <h1 className="text-4xl font-bold">
-        Spy Game
-      </h1>
+    <main className="flex min-h-screen items-center justify-center">
+      <button
+        onClick={createRoom}
+        disabled={loading}
+        className="rounded-xl bg-black px-6 py-3 text-white"
+      >
+        {loading ? "Creating..." : "Create Room"}
+      </button>
     </main>
   );
 }
