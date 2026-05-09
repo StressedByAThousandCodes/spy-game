@@ -1,5 +1,6 @@
 "use client";
 
+import { setStoredDeviceToken } from "@/lib/localStorage";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -17,6 +18,8 @@ export default function HomePage() {
       });
 
       const data = await response.json();
+
+      setStoredDeviceToken(data.deviceToken);
 
       router.push(data.shareUrl);
     } catch (error) {

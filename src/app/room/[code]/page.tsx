@@ -1,17 +1,11 @@
-interface RoomPageProps {
-  params: {
-    code: string;
-  };
-}
+import RoomClient from "./RoomClient";
 
-export default function RoomPage({
+export default async function RoomPage({
   params,
-}: RoomPageProps) {
-  return (
-    <main className="p-10">
-      <h1 className="text-3xl font-bold">
-        Room: {params.code}
-      </h1>
-    </main>
-  );
+}: {
+  params: Promise<{ code: string }>;
+}) {
+  const { code } = await params;
+
+  return <RoomClient roomCode={code} />;
 }
