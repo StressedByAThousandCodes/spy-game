@@ -7,7 +7,7 @@ export default function TestPage() {
   useEffect(() => {
     async function testConnection() {
       const { data, error } = await supabase
-        .from("test")
+        .from("players")
         .select("*");
 
       console.log(data, error);
